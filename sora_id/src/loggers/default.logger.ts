@@ -1,9 +1,9 @@
-import pino from "pino";
-// import rfs from "rotating-file-stream";
+import pino, { transport } from "pino";
 import path from "path";
 import fs from "fs";
 import { timer } from "@/utils/timers.util";
 const rfs = require("rotating-file-stream");
+const { Writable } = require("stream");
 
 const logDirectory = path.join(__dirname, "..", "..", "logs");
 if (!fs.existsSync(logDirectory)) {
@@ -11,7 +11,7 @@ if (!fs.existsSync(logDirectory)) {
 }
 
 // Tạo stream ghi log theo ngày
-const stream = rfs.createStream(
+const fileStream = rfs.createStream(
   (time: string | number | Date, index: any) => {
     let date = timer();
     if (time) {
@@ -27,12 +27,38 @@ const stream = rfs.createStream(
   }
 );
 
+const fileWritable = new Writable({
+  write(chunk: any, encoding: any, callback: any) {
+    try {
+      const log = JSON.parse(chunk.toString());
+
+      const formatted = `{"level":${log.level},"time":"${timer(
+        log.time
+      ).toISOString()}","pid":${log.pid},"hostname":"${log.hostname}","msg":"${
+        log.msg
+      }"}\n`;
+
+      fileStream.write(formatted);
+      callback();
+    } catch (err) {
+      console.error("⚠️ Log parse error:", err);
+      callback(err);
+    }
+  },
+});
+
 const logger = pino(
   {
     level: "info",
-    timestamp: pino.stdTimeFunctions.isoTime,
   },
-  stream
+  pino.multistream([
+    { stream: fileWritable },
+    {
+      stream: pino.transport({
+        target: "pino-pretty",
+      }),
+    },
+  ])
 );
 
 export default logger;
