@@ -1,0 +1,6 @@
+@baseUrl = https://localhost:3000
+
+### Check healthz app
+
+GET {{baseUrl}}/healthz 
+Content-Type: application/json

@@ -1,0 +1,59 @@
+$inputHeight: 36px;
+$inputBorderRadius: 6px;
+$inputPaddingHorizontal: 8px;
+
+$inputInvalidColor: #dc3545;
+
+.soraInputContainer {
+  display: flex;
+  flex-direction: column;
+  .label {
+    margin-bottom: 4px;
+    &.invalid {
+      color: $inputInvalidColor;
+    }
+  }
+  .inputControl {
+    position: relative;
+    .input {
+      width: 100%;
+      height: $inputHeight;
+      outline: none;
+      border-radius: $inputBorderRadius;
+      box-shadow: none;
+      border: 1px solid #ccc;
+      padding-left: $inputPaddingHorizontal;
+      padding-right: $inputPaddingHorizontal;
+      &.password {
+        padding-right: $inputPaddingHorizontal + 20px;
+      }
+      &.invalid {
+        border: 1px solid $inputInvalidColor;
+      }
+    }
+    .iconEyes {
+      position: absolute;
+
+      background-size: 20px 20px;
+      background-repeat: no-repeat;
+      background-position: center;
+      inset: 8px 8px auto auto;
+      cursor: pointer;
+      height: 20px;
+      width: 20px;
+
+      &.on {
+        background-image: url("@/assets/imgs/icons/ic_eye.svg");
+      }
+      &.off {
+        background-image: url("@/assets/imgs/icons/ic_eye_off.svg");
+      }
+    }
+  }
+
+  .invalidMessage {
+    margin-top: 4px;
+    font-size: 12px;
+    color: $inputInvalidColor;
+  }
+}

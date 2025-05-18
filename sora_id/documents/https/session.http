@@ -1,0 +1,46 @@
+@baseUrl = https://localhost:3000
+
+@refreshToken = 4fvi-As25rCR6qpFAS8DhYVK-HAFXRbF
+
+### Grant token (case thành công) - GrantType: password
+
+POST {{baseUrl}}/session 
+Content-Type: application/json
+
+{
+    "grantType": "password",
+    "username": "dbhuan@test.com",
+    "password": "123456"
+}
+
+### Grant token (case thành công) - GrantType: refresh_token
+
+POST {{baseUrl}}/session 
+Content-Type: application/json
+
+{
+    "grantType": "refresh_token",
+    "refreshToken": "{{refreshToken}}"
+}
+
+### Grant token (case thất bại: grantType không hợp lệ)
+
+POST {{baseUrl}}/session 
+Content-Type: application/json
+
+{
+    "grantType": "sfsfsf",
+    "username": "dbhuan",
+    "password": "123456"
+}
+
+### Grant token (case thất bại: username hoặc mật khẩu không hợp lệ)
+
+POST {{baseUrl}}/session 
+Content-Type: application/json
+
+{
+    "grantType": "password",
+    "username": "dbhuansfsfsf",
+    "password": "123456"
+}

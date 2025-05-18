@@ -1,0 +1,25 @@
+@use "@/assets/scss/_variable.scss" as *;
+
+$buttonHeight: 36px;
+$buttonBorderRadius: 6px;
+$buttonPaddingHorizontal: 12px;
+
+.soraButton {
+  height: $buttonHeight;
+  border-radius: $buttonBorderRadius;
+  padding-left: $buttonPaddingHorizontal;
+  padding-right: $buttonPaddingHorizontal;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  &.primary {
+    background-color: $primaryColor;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+      background-color: $primaryColorHover;
+    }
+  }
+}
