@@ -21,7 +21,8 @@
     "outDir": "dist", // Thư mục output sau khi build
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@test/*": ["tests/*"]
     }
   },
   "include": ["src/**/*"], // Bao gồm tất cả file trong src

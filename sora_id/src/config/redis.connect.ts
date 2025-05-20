@@ -69,7 +69,8 @@ export class RedisDbContext {
    * Get cache key
    */
   async get<TDto extends string | number | object>(
-    key: string
+    key: string,
+    { isString }: { isString: boolean } = { isString: false }
   ): Promise<TDto | null> {
     const _this = this;
     if (!_this._client) {
@@ -80,7 +81,7 @@ export class RedisDbContext {
     if (!valStr) {
       return null;
     }
-    if (_this.checkType<TDto>(valStr)) {
+    if (isString) {
       return valStr as TDto;
     }
     return JSON.parse(valStr) as TDto;

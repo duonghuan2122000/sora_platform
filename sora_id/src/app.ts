@@ -2,9 +2,13 @@ import express, { Request, Response } from "express";
 import sessionRouter from "@/routes/session.router";
 import { HealthzController } from "./controllers/healthz.controller";
 import userRouter from "@/routes/user.router";
+import helmet from "helmet";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
+app.use(helmet());
+app.use(cookieParser());
 app.use(express.json());
 
 app.get("/healthz", async (req: Request, res: Response) => {

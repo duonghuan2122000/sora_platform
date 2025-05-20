@@ -8,7 +8,19 @@ export default function AppRoutes() {
     <Suspense fallback={<LoaderView />}>
       <Switch>
         <Route path="/" component={lazy(() => import("@/pages/HomeView"))} />
-        <Route path="/login" component={lazy(() => import("@/pages/LoginView"))} />
+        <Route
+          path="/login"
+          component={lazy(() => import("@/pages/LoginView"))}
+        />
+        <Route
+          path="/cu/password/change"
+          component={lazy(() => import("@/pages/ChangePasswordView"))}
+        />
+        <Route
+          path="/cu"
+          component={lazy(() => import("@/pages/UserInfoView"))}
+        />
+        <Route>404 Not Found</Route>
       </Switch>
     </Suspense>
   );

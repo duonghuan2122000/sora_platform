@@ -12,3 +12,7 @@ export const getTokenCacheKey = async (accessToken: string) => {
 export const getRefreshTokenCacheKey = async (refreshToken: string) => {
   return `refreshToken:${refreshToken}`;
 };
+
+export const getSessionCookieName = async () => {
+  return `x-sora-sessionid`;
+};

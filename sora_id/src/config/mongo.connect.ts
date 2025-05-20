@@ -9,7 +9,7 @@ export class MongoDbContext {
   async connect() {
     const _this = this;
     if (!process.env.MONGO_URL || !process.env.MONGO_DB) {
-      throw "Thiếu cấu hình MongoDB";
+      throw new Error("Thiếu cấu hình MongoDB");
     }
     _this._client = new MongoClient(process.env.MONGO_URL, {
       serverApi: {

@@ -1,0 +1,16 @@
+.leftMenu {
+  width: 250px;
+  border-right: 1px solid #ccc;
+  .leftMenuItem {
+    padding: 0 16px;
+    height: 36px;
+    line-height: 36px;
+    cursor: pointer;
+    border-bottom: 1px dotted #ccc;
+
+    &:hover,
+    &.active {
+      background-color: rgba($color: #000000, $alpha: 0.05);
+    }
+  }
+}

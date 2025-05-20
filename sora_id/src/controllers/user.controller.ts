@@ -8,6 +8,8 @@ import { Request, Response } from "express";
 import { IBaseController } from "./base.controller";
 import UserRepository from "@/repositories/user.repository";
 import { mongoDbContext } from "@/config/mongo.connect";
+import { getSessionCookieName } from "@/utils/token.util";
+import { timer } from "@/utils/timers.util";
 
 export interface IUserController extends IBaseController {
   // grant token
@@ -44,7 +46,17 @@ export class UserController implements IUserController {
   async grantToken(req: Request, res: Response): Promise<void> {
     const _this = this;
     let payload = req.body as GrantTokenUserInput;
-    res.status(200).json(await _this._userService?.grantToken(payload));
+    let result = await _this._userService?.grantToken(payload);
+    if (result?.success) {
+      res.cookie(await getSessionCookieName(), result?.data?.accessToken, {
+        expires: timer(new Date())
+          .add(result.data?.expiresIn ?? 0, "second")
+          .toDate(),
+        httpOnly: true,
+        secure: true,
+      });
+    }
+    res.status(200).json(result);
   }
 
   // tạo user
@@ -57,8 +69,8 @@ export class UserController implements IUserController {
   // lấy thông tin user hiện tại
   async getCurrentUser(req: Request, res: Response): Promise<void> {
     const _this = this;
-    res
-      .status(200)
-      .json(await _this._userService?.getCurrentUser(req.tokenInfo!));
+    let result = await _this._userService?.getCurrentUser(req.tokenInfo!);
+    console.log(result);
+    res.status(200).json(result);
   }
 }

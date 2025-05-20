@@ -9,6 +9,11 @@ i18n
     resources: {
       vi: {
         translation: {
+          // Main layout
+          MainLayout: {
+            Logout: "Đăng xuất",
+          },
+          // Màn hình đăng nhập
           LoginView: {
             Title: "Đăng nhập",
             EmailLabel: "Email",
@@ -20,6 +25,18 @@ i18n
               PasswordRequired: "Mật khẩu không được để trống",
               PasswordRangeLength: "Mật khẩu có độ dài từ 6 đến 36 ký tự",
             },
+          },
+          // màn hình thông tin cá nhân
+          UserInfoView: {
+            Title: "Thông tin cá nhân",
+          },
+          // màn hình thay đổi mật khẩu
+          ChangePasswordView: {
+            Title: "Thay đổi mật khẩu",
+            PasswordLabel: "Mật khẩu",
+            NewPasswordLabel: "Mật khẩu mới",
+            ConfirmNewPasswordLabel: "Xác nhận mật khẩu mới",
+            Submit: "Cập nhật",
           },
         },
       },

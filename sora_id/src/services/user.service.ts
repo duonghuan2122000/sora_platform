@@ -147,7 +147,8 @@ export class UserService implements IUserService {
   ): Promise<ResponseBase<GrantTokenUserResult>> {
     const _this = this;
     let userId = await redisDbContext.get<string>(
-      await getRefreshTokenCacheKey(payload.refreshToken!)
+      await getRefreshTokenCacheKey(payload.refreshToken!),
+      { isString: true }
     );
     if (!userId) {
       return {
@@ -232,10 +233,11 @@ export class UserService implements IUserService {
 
   // lấy thông tin user hiện tại
   async getCurrentUser(tokenInfo: TokenInfo): Promise<CurrentUserResult> {
-    return {
+    let result = {
       userId: tokenInfo.userId,
       email: tokenInfo.email,
       sessionId: tokenInfo.sessionId,
     };
+    return result;
   }
 }

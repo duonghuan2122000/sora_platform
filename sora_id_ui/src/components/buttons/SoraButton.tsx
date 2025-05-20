@@ -8,6 +8,8 @@ type SoraButtonProps = {
 
   // loại button
   type?: "primary" | "secondary";
+
+  onClick?: () => void;
 };
 
 /**
@@ -18,7 +20,10 @@ const SoraButton: FC<SoraButtonProps> = (props: SoraButtonProps) => {
   const buttonType = props.type ?? "primary";
 
   return (
-    <button className={clsx([styles.soraButton, styles[buttonType]])}>
+    <button
+      className={clsx([styles.soraButton, styles[buttonType]])}
+      onClick={props.onClick}
+    >
       {props.title}
     </button>
   );

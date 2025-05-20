@@ -14,7 +14,7 @@ type SoraInputProps = {
   type?: "text" | "password";
 
   // giá trị thẻ input
-  value: string;
+  value?: string;
 
   // props callback khi giá trị input thay đổi
   onChange?: (val: string) => void;
@@ -68,8 +68,9 @@ export default function SoraInput(props: SoraInputProps) {
           <span
             className={clsx([
               styles.iconEyes,
-              type == "password" && styles.on,
-              type == "text" && styles.off,
+              "fa-solid",
+              type == "password" && "fa-eye",
+              type == "text" && "fa-eye-slash",
             ])}
             onClick={togglePassword}
           ></span>
