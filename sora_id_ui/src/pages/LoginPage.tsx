@@ -1,4 +1,4 @@
-import SoraInput from "@/components/buttons/inputs/SoraInput";
+import SoraInput from "@/components/inputs/SoraInput";
 import SoraButton from "@/components/buttons/SoraButton";
 
 /**
