@@ -1,0 +1,24 @@
+{
+  "name": "sora_id_ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@solidjs/meta": "^0.29.4",
+    "@solidjs/router": "^0.15.3",
+    "bootstrap": "^5.3.6",
+    "solid-js": "^1.9.5"
+  },
+  "devDependencies": {
+    "sass": "^1.89.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-solid": "^2.11.6"
+  }
+}
