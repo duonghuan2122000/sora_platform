@@ -1,4 +1,5 @@
-import { createSignal, onMount, type Component } from "solid-js";
+import { createSignal, onMount, Show, type Component } from "solid-js";
+import styles from "@/assets/scss/components/inputs/SoraInput.module.scss";
 
 interface SoraInputProps {
   /**
@@ -38,6 +39,9 @@ interface SoraInputProps {
 const SoraInput: Component<SoraInputProps> = (props) => {
   const [randomHash, setRandomHash] = createSignal("");
 
+  // Biến lưu giá trị type khởi tạo từ component cha
+  const [inputType, setInputType] = createSignal(props.type);
+
   onMount(() => {
     setRandomHash(btoa(Math.random().toString()).substring(0, 8));
   });
@@ -47,15 +51,33 @@ const SoraInput: Component<SoraInputProps> = (props) => {
       <label for={randomHash()} class="form-label">
         {props.label}
       </label>
-      <input
-        type={props.type}
-        class="form-control"
-        id={randomHash()}
-        placeholder={props.placeholder}
-        autofocus={props.autoFocus}
-        value={props.value ?? ""}
-        on:change={(e) => props.onChange && props.onChange(e.target.value)}
-      />
+      <div class={styles.inputContainer}>
+        <input
+          type={inputType()}
+          class="form-control"
+          classList={{ [styles.input]: true }}
+          id={randomHash()}
+          placeholder={props.placeholder}
+          autofocus={props.autoFocus}
+          value={props.value ?? ""}
+          on:change={(e) => props.onChange && props.onChange(e.target.value)}
+        />
+        <Show when={props.type == "password" && inputType() == "password"}>
+          <i
+            class="fa-solid fa-eye"
+            classList={{ [styles.inputIconEye]: true }}
+            on:click={() => setInputType("text")}
+          ></i>
+        </Show>
+
+        <Show when={props.type == "password" && inputType() == "text"}>
+          <i
+            class="fa-solid fa-eye-slash"
+            classList={{ [styles.inputIconEyeSlash]: true }}
+            on:click={() => setInputType("password")}
+          ></i>
+        </Show>
+      </div>
     </div>
   );
 };
