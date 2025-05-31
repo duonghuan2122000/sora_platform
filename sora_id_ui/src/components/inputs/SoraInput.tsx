@@ -1,4 +1,4 @@
-import type { Component } from "solid-js";
+import { createSignal, onMount, type Component } from "solid-js";
 
 interface SoraInputProps {
   /**
@@ -9,7 +9,7 @@ interface SoraInputProps {
   /**
    * Input type
    */
-  type: "text";
+  type: "text" | "password";
 
   /**
    * Placeholder
@@ -20,25 +20,41 @@ interface SoraInputProps {
    * auto focus
    */
   autoFocus?: boolean;
-}
 
-const randomHash = btoa(Math.random().toString()).substring(0, 8);
+  /**
+   * value
+   */
+  value?: string;
+
+  /**
+   * event handle value change
+   */
+  onChange?: (val?: string) => void;
+}
 
 /**
  * Component input
  */
 const SoraInput: Component<SoraInputProps> = (props) => {
+  const [randomHash, setRandomHash] = createSignal("");
+
+  onMount(() => {
+    setRandomHash(btoa(Math.random().toString()).substring(0, 8));
+  });
+
   return (
     <div>
-      <label for={randomHash} class="form-label">
+      <label for={randomHash()} class="form-label">
         {props.label}
       </label>
       <input
         type={props.type}
         class="form-control"
-        id={randomHash}
+        id={randomHash()}
         placeholder={props.placeholder}
         autofocus={props.autoFocus}
+        value={props.value ?? ""}
+        on:change={(e) => props.onChange && props.onChange(e.target.value)}
       />
     </div>
   );

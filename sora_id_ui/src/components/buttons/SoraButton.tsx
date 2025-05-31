@@ -10,6 +10,11 @@ interface SoraButtonProps {
    * Text button
    */
   text: string;
+
+  /**
+   * event click
+   */
+  onClick?: () => void;
 }
 
 /**
@@ -17,7 +22,11 @@ interface SoraButtonProps {
  */
 const SoraButton: Component<SoraButtonProps> = (props) => {
   return (
-    <button class="btn" classList={{ "btn-primary": props.type == "primary" }}>
+    <button
+      class="btn"
+      classList={{ "btn-primary": props.type == "primary" }}
+      on:click={() => props.onClick && props.onClick()}
+    >
       {props.text}
     </button>
   );
