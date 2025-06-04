@@ -28,9 +28,19 @@ interface SoraInputProps {
   value?: string;
 
   /**
+   * Thông tin error
+   */
+  errorMessage?: string;
+
+  /**
    * event handle value change
    */
   onChange?: (val?: string) => void;
+
+  /**
+   * Sự kiện blur input
+   */
+  onBlur?: (e: FocusEvent) => void;
 }
 
 /**
@@ -55,12 +65,16 @@ const SoraInput: Component<SoraInputProps> = (props) => {
         <input
           type={inputType()}
           class="form-control"
-          classList={{ [styles.input]: true }}
+          classList={{
+            [styles.input]: true,
+            "is-invalid": !!props.errorMessage,
+          }}
           id={randomHash()}
           placeholder={props.placeholder}
           autofocus={props.autoFocus}
           value={props.value ?? ""}
           on:change={(e) => props.onChange && props.onChange(e.target.value)}
+          on:blur={(e) => props.onBlur && props.onBlur(e)}
         />
         <Show when={props.type == "password" && inputType() == "password"}>
           <i
@@ -76,6 +90,10 @@ const SoraInput: Component<SoraInputProps> = (props) => {
             classList={{ [styles.inputIconEyeSlash]: true }}
             on:click={() => setInputType("password")}
           ></i>
+        </Show>
+
+        <Show when={props.errorMessage}>
+          <div class="invalid-feedback">{props.errorMessage}</div>
         </Show>
       </div>
     </div>
