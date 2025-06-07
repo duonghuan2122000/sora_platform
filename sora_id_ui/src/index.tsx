@@ -7,4 +7,6 @@ import { routes } from "@/routers/routes";
 
 const root = document.getElementById("root");
 
-render(() => <Router base="/ui/id">{routes}</Router>, root!);
+const basePath = window._appConfig?.basePath;
+
+render(() => <Router base={basePath}>{routes}</Router>, root!);
