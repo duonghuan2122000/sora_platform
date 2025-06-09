@@ -12,6 +12,7 @@ func main() {
 	// Load cấu hình từ file
 	config.LoadConfig(".")
 	database.InitMysql(config.AppConfig.MysqlConnectionString)
+	database.InitRedis(config.AppConfig.RdbAddr, config.AppConfig.RdbPass, config.AppConfig.Rdb)
 	router := gin.Default()
 	router.SetTrustedProxies(config.AppConfig.TrustProxies)
 	routes.InitRoutes(router)

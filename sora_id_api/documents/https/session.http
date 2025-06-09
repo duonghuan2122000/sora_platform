@@ -1,0 +1,14 @@
+@baseUrl = http://dbhuan.local/api/id
+
+@refreshToken = 4fvi-As25rCR6qpFAS8DhYVK-HAFXRbF
+
+### Grant token (case thành công) - GrantType: password
+
+POST {{baseUrl}}/v1/session 
+Content-Type: application/json
+
+{
+    "grantType": "password",
+    "username": "dbhuan@test.com",
+    "password": "123456"
+}

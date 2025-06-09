@@ -11,6 +11,9 @@ type Config struct {
 	AppPort               string   `mapstructure:"APP_PORT"`
 	TrustProxies          []string `mapstructure:"TRUST_PROXIES"`
 	MysqlConnectionString string   `mapstructure:"MYSQL_CONNECTION_STRING"`
+	RdbAddr               string   `mapstructure:"REDIS_ADDR"`
+	RdbPass               string   `mapstructure:"REDIS_PASS"`
+	Rdb                   int      `mapstrucuture:"REDIS_DB"`
 }
 
 var AppConfig Config

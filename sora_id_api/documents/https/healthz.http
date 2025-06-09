@@ -1,0 +1,6 @@
+@baseUrl = http://dbhuan.local/api/id
+
+### Check healthz app
+
+GET {{baseUrl}}/v1/healthz 
+Content-Type: application/json

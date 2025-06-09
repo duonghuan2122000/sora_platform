@@ -5,19 +5,19 @@ import "time"
 // user entity
 type User struct {
 	// Khóa chính
-	Id string `gorm:"primaryKey"`
+	Id string `gorm:"primaryKey;column:Id"`
 	// Tên đăng nhập
-	Username string `gorm:"index"`
+	Username string `gorm:"index;column:Username"`
 	// Tên
-	FirstName string
+	FirstName *string `gorm:"column:FirstName"`
 	// Họ và tên đệm
-	LastName string
+	LastName *string `gorm:"column:LastName"`
 	// Mật khẩu đã hash
-	PasswordHashed string
+	PasswordHashed *string `gorm:"column:PasswordHashed"`
 	// Thời gian tạo
-	CreatedDate time.Time
+	CreatedDate time.Time `gorm:"column:CreatedDate"`
 	// Thời gian cập nhật
-	UpdatedDate time.Time
+	UpdatedDate time.Time `gorm:"column:UpdatedDate"`
 }
 
 type Tabler interface {
@@ -41,3 +41,46 @@ type UserDto struct {
 	// Họ và tên đệm
 	LastName string `json:"lastName"`
 }
+
+// Dto tạo user
+type CreateUserDto struct {
+	// Tên đăng nhập
+	Username string `json:"username"`
+
+	// Tên
+	FirstName string `json:"firstName"`
+
+	// Họ và tên đệm
+	LastName string `json:"lastName"`
+
+	// Mật khẩu
+	Password string `json:"password"`
+}
+
+// Dto lấy thông tin session của người dùng
+type GetUserSessionReqDto struct {
+	// Loại grant
+	GrantType string `json:"grantType"`
+	// Tên đăng nhập
+	Username string `json:"username"`
+	// Mật khẩu
+	Password string `json:"password"`
+}
+
+// Dto res lấy thông tin session của người dùng
+type GetUserSessionResDto struct {
+	// Access token
+	AccessToken string `json:"accessToken"`
+	// Loại token
+	TokenType string `json:"tokenType"`
+	// Thời gian hiệu lực
+	ExpiresIn int `json:"expiresIn"`
+	// Thông tin user
+	User UserDto `json:"user"`
+}
+
+type GetUserSessionGrantType string
+
+const (
+	GrantTypePassword GetUserSessionGrantType = "password"
+)

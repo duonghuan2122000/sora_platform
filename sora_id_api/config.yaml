@@ -3,3 +3,6 @@ APP_PORT: "8080"
 TRUST_PROXIES:
   - "127.0.0.1"
 MYSQL_CONNECTION_STRING: "root:12345678@Abc@tcp(127.0.0.1:3306)/sora_id?charset=utf8mb4&parseTime=True&loc=UTC"
+REDIS_ADDR: "127.0.0.1:6379"
+REDIS_PASS: ""
+REDIS_DB: 0
