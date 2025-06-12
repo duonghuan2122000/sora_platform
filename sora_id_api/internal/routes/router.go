@@ -39,7 +39,8 @@ func InitRoutes(router *gin.Engine) {
 
 	// user
 	user.InitHandler()
-	routerV1.GET("/users/:id", user.GetById)
+	routerV1.GET("/users/me", base.AuthMiddleware(), user.GetCurrentUser)
 	routerV1.POST("/users", user.Create)
 	routerV1.POST("/session", user.GetSession)
+
 }

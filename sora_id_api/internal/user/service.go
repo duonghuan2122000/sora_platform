@@ -11,13 +11,16 @@ import (
 
 type UserService interface {
 	// Hàm lấy thông tin user bằng id
-	GetById(id string) (*UserDto, error)
+	GetById(id string) (*base.UserDto, error)
 
 	// Tạo user
-	Create(createUserDto CreateUserDto) (*UserDto, error)
+	Create(createUserDto CreateUserDto) (*base.UserDto, error)
 
 	// Thực hiện lấy session hiện tại của người dùng
 	GetSession(payload GetUserSessionReqDto) (*GetUserSessionResDto, error)
+
+	// Lấy thông tin user hiện tại
+	GetCurrentUser(userDto *base.UserDto) (*base.UserDto, error)
 }
 
 type userService struct {
@@ -30,8 +33,8 @@ func NewUserService(userRepo UserRepository) UserService {
 	}
 }
 
-func mapUserToUserDto(user *User) *UserDto {
-	return &UserDto{
+func mapUserToUserDto(user *User) *base.UserDto {
+	return &base.UserDto{
 		Id:        user.Id,
 		Username:  user.Username,
 		FirstName: *user.FirstName,
@@ -39,7 +42,7 @@ func mapUserToUserDto(user *User) *UserDto {
 	}
 }
 
-func (service *userService) GetById(id string) (*UserDto, error) {
+func (service *userService) GetById(id string) (*base.UserDto, error) {
 	user, err := service.userRepo.GetById(id)
 	if err != nil {
 		return nil, err
@@ -48,7 +51,7 @@ func (service *userService) GetById(id string) (*UserDto, error) {
 }
 
 // Tạo user
-func (service *userService) Create(createUserDto CreateUserDto) (*UserDto, error) {
+func (service *userService) Create(createUserDto CreateUserDto) (*base.UserDto, error) {
 	// kiểm tra username đã tồn tại chưa?
 	user, _ := service.userRepo.GetByUsername(createUserDto.Username)
 
@@ -95,7 +98,7 @@ func (service *userService) GetSession(payload GetUserSessionReqDto) (*GetUserSe
 		userDto := mapUserToUserDto(user)
 		userDtoStr, _ := json.Marshal(userDto)
 		expiresIn := 3600
-		database.Rdb.Set(context.Background(), base.GetReferenceToken(accessToken), string(userDtoStr), time.Duration(expiresIn)*time.Second)
+		database.Rdb.Set(context.Background(), base.GetReferenceTokenKey(accessToken), string(userDtoStr), time.Duration(expiresIn)*time.Second)
 		result := &GetUserSessionResDto{
 			AccessToken: accessToken,
 			TokenType:   "Bearer",
@@ -109,4 +112,9 @@ func (service *userService) GetSession(payload GetUserSessionReqDto) (*GetUserSe
 			Message: "Không hỗ trợ",
 		}
 	}
+}
+
+// Lấy thông tin user hiện tại
+func (service *userService) GetCurrentUser(userDto *base.UserDto) (*base.UserDto, error) {
+	return userDto, nil
 }

@@ -1,7 +1,5 @@
 @baseUrl = http://dbhuan.local/api/id
 
-@accessToken = paSODgNn-98Q9iSAjqit3G5liiu3TjuzbN1ItvrWmdc=
-
 ### Tạo user
 
 POST {{baseUrl}}/v1/users 
@@ -16,6 +14,5 @@ Content-Type: application/json
 
 ### Lấy thông tin user hiện tại
 
-GET {{baseUrl}}/users/cu 
+GET {{baseUrl}}/v1/users/me
 Content-Type: application/json
-Authorization: Bearer {{accessToken}}

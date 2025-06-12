@@ -13,3 +13,23 @@ type ResponseBase struct {
 	// Data (chỉ có giá trị khi thành công)
 	Data any `json:"data,omitempty"`
 }
+
+const (
+	AccessTokenCookieName = "x-sora-access-token"
+
+	CurrentUserVarKey = "Sora:CurrentUser"
+)
+
+type UserDto struct {
+	// Khóa chính
+	Id string `json:"id"`
+
+	// Tên đăng nhập
+	Username string `json:"username"`
+
+	// Tên
+	FirstName string `json:"firstName"`
+
+	// Họ và tên đệm
+	LastName string `json:"lastName"`
+}

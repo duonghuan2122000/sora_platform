@@ -1,6 +1,9 @@
 package user
 
-import "time"
+import (
+	"soraidapi/internal/base"
+	"time"
+)
 
 // user entity
 type User struct {
@@ -26,20 +29,6 @@ type Tabler interface {
 
 func (User) TableName() string {
 	return "SoraUser"
-}
-
-type UserDto struct {
-	// Khóa chính
-	Id string `json:"id"`
-
-	// Tên đăng nhập
-	Username string `json:"username"`
-
-	// Tên
-	FirstName string `json:"firstName"`
-
-	// Họ và tên đệm
-	LastName string `json:"lastName"`
 }
 
 // Dto tạo user
@@ -76,7 +65,7 @@ type GetUserSessionResDto struct {
 	// Thời gian hiệu lực
 	ExpiresIn int `json:"expiresIn"`
 	// Thông tin user
-	User UserDto `json:"user"`
+	User base.UserDto `json:"user"`
 }
 
 type GetUserSessionGrantType string

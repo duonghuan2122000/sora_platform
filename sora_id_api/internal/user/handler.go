@@ -106,5 +106,22 @@ func GetSession(c *gin.Context) {
 		base.ToErrorResponse(c, "999", "Thất bại")
 		return
 	}
+	c.SetCookie(base.AccessTokenCookieName, result.AccessToken, result.ExpiresIn, "/", "", false, true)
 	base.ToSuccessResponse(c, result)
+}
+
+/*
+Lấy thông tin user hiện tại
+
+# Cần auth
+
+# Mã lỗi
+
+- 401: Unauth
+
+- 999: Thất bại
+*/
+func GetCurrentUser(c *gin.Context) {
+	userDto := base.GetCurrentUser(c)
+	base.ToSuccessResponse(c, userDto)
 }
