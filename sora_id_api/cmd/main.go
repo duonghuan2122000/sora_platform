@@ -13,6 +13,10 @@ func main() {
 	config.LoadConfig(".")
 	database.InitMysql(config.AppConfig.MysqlConnectionString)
 	database.InitRedis(config.AppConfig.RdbAddr, config.AppConfig.RdbPass, config.AppConfig.Rdb)
+	database.InitS3Storage(config.AppConfig.S3Endpoint,
+		config.AppConfig.S3AccessKey,
+		config.AppConfig.S3SecretKey,
+		config.AppConfig.S3UseSsl)
 	router := gin.Default()
 	router.SetTrustedProxies(config.AppConfig.TrustProxies)
 	routes.InitRoutes(router)

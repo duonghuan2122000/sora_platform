@@ -21,6 +21,8 @@ type User struct {
 	CreatedDate time.Time `gorm:"column:CreatedDate"`
 	// Thời gian cập nhật
 	UpdatedDate time.Time `gorm:"column:UpdatedDate"`
+	// ObjectId S3 cho Avatar
+	AvatarS3ObjectId string `gorm:"column:AvatarS3ObjectId"`
 }
 
 type Tabler interface {

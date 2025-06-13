@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"soraidapi/internal/base"
+	"soraidapi/internal/files"
 	"soraidapi/internal/user"
 
 	"github.com/gin-gonic/gin"
@@ -43,4 +44,7 @@ func InitRoutes(router *gin.Engine) {
 	routerV1.POST("/users", user.Create)
 	routerV1.POST("/session", user.GetSession)
 
+	// file
+	files.InitHandler()
+	routerV1.POST("/files", files.UploadFile)
 }

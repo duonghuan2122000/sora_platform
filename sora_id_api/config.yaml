@@ -6,3 +6,8 @@ MYSQL_CONNECTION_STRING: "root:12345678@Abc@tcp(127.0.0.1:3306)/sora_id?charset=
 REDIS_ADDR: "127.0.0.1:6379"
 REDIS_PASS: ""
 REDIS_DB: 0
+# Thông tin S3 Storage
+S3_ENDPOINT: "localhost:9002"
+S3_ACCESSKEY: "minioadmin"
+S3_SECRETKEY: "minioadmin"
+S3_USESSL: false

@@ -14,6 +14,10 @@ type Config struct {
 	RdbAddr               string   `mapstructure:"REDIS_ADDR"`
 	RdbPass               string   `mapstructure:"REDIS_PASS"`
 	Rdb                   int      `mapstrucuture:"REDIS_DB"`
+	S3Endpoint            string   `mapstructure:"S3_ENDPOINT"`
+	S3AccessKey           string   `mapstructure:"S3_ACCESSKEY"`
+	S3SecretKey           string   `mapstructure:"S3_SECRETKEY"`
+	S3UseSsl              bool     `mapstructure:"S3_USESSL"`
 }
 
 var AppConfig Config
