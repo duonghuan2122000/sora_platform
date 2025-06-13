@@ -3,6 +3,7 @@ package files
 import (
 	"bytes"
 	"context"
+	"io"
 	"soraidapi/internal/database"
 
 	"github.com/minio/minio-go/v7"
@@ -11,6 +12,9 @@ import (
 type FileService interface {
 	// Upload file
 	UploadFile(fileData []byte, bucketName string, objectId string, extraData *FileExtraData) (bool, error)
+
+	// Stream File
+	StreamFile(bucketName string, objectId string) (*FileInfoDto, error)
 }
 
 type fileService struct {
@@ -61,4 +65,34 @@ func (fileSvc *fileService) UploadFile(fileData []byte, bucketName string, objec
 		return false, err
 	}
 	return true, nil
+}
+
+// Stream File
+func (fileSvc *fileService) StreamFile(bucketName string, objectId string) (*FileInfoDto, error) {
+	minObj, err := database.S3Storage.GetObject(context.Background(), bucketName, objectId, minio.GetObjectOptions{})
+	if err != nil {
+		return nil, err
+	}
+	defer minObj.Close()
+
+	buf := new(bytes.Buffer)
+	_, err = io.Copy(buf, minObj)
+	if err != nil {
+		return nil, err
+	}
+	stat, err := database.S3Storage.StatObject(context.Background(), bucketName, objectId, minio.GetObjectOptions{})
+	if err != nil {
+		return nil, err
+	}
+	extraData := &FileExtraData{
+		ContentType: stat.ContentType,
+	}
+	if disp, ok := stat.UserMetadata["X-Amz-Meta-Orginal-Filename"]; ok {
+		extraData.OrginalFileName = &disp
+	}
+	result := &FileInfoDto{
+		FileData:  buf.Bytes(),
+		ExtraData: extraData,
+	}
+	return result, nil
 }

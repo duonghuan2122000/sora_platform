@@ -47,4 +47,5 @@ func InitRoutes(router *gin.Engine) {
 	// file
 	files.InitHandler()
 	routerV1.POST("/files", files.UploadFile)
+	routerV1.GET("/files/stream", files.StreamFile)
 }
