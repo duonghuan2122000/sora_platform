@@ -1,3 +1,4 @@
+BASE_URL: "http://dbhuan.local/api/id"
 HOST_NAME: "127.0.0.1"
 APP_PORT: "8080"
 TRUST_PROXIES:

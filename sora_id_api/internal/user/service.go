@@ -6,7 +6,11 @@ import (
 	"soraidapi/internal/base"
 	"soraidapi/internal/database"
 	sora_errors "soraidapi/internal/errors"
+	"soraidapi/internal/files"
+	"strings"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type UserService interface {
@@ -21,6 +25,12 @@ type UserService interface {
 
 	// Lấy thông tin user hiện tại
 	GetCurrentUser(userDto *base.UserDto) (*base.UserDto, error)
+
+	// Cập nhật avatar
+	UpdateAvatar(payload UpdateUserAvatarReqDto) (*string, error)
+
+	// Hàm lấy thông tin avatar
+	GetAvatar(userDto *base.UserDto) (*string, error)
 }
 
 type userService struct {
@@ -117,4 +127,27 @@ func (service *userService) GetSession(payload GetUserSessionReqDto) (*GetUserSe
 // Lấy thông tin user hiện tại
 func (service *userService) GetCurrentUser(userDto *base.UserDto) (*base.UserDto, error) {
 	return userDto, nil
+}
+
+// Cập nhật avatar
+func (service *userService) UpdateAvatar(payload UpdateUserAvatarReqDto) (*string, error) {
+	objectId := strings.ReplaceAll(uuid.New().String(), "-", "")
+	_, err := files.FileSvc.UploadFile(payload.FileInfo.FileData, "sora-platform", objectId, payload.FileInfo.ExtraData)
+	if err != nil {
+		return nil, err
+	}
+	_, err = service.userRepo.Update(payload.User.Id, User{
+		AvatarS3ObjectId: objectId,
+	})
+	if err != nil {
+		return nil, err
+	}
+	urlStreamFile := payload.BaseUrl + "/v1/files/stream?bucketName=sora-platform&objectId=" + objectId
+	return &urlStreamFile, nil
+}
+
+// Hàm lấy thông tin avatar
+func (service *userService) GetAvatar(userDto *base.UserDto) (*string, error) {
+	avatarS3ObjectId, err := service.userRepo.GetAvatarObjectId(userDto.Id)
+	return avatarS3ObjectId, err
 }

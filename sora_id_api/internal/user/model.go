@@ -2,6 +2,7 @@ package user
 
 import (
 	"soraidapi/internal/base"
+	"soraidapi/internal/files"
 	"time"
 )
 
@@ -75,3 +76,13 @@ type GetUserSessionGrantType string
 const (
 	GrantTypePassword GetUserSessionGrantType = "password"
 )
+
+// Dto req cập nhật avatar
+type UpdateUserAvatarReqDto struct {
+	// Thông tin file
+	FileInfo files.FileInfoDto
+	// Thông tin user
+	User base.UserDto
+	// base url của app
+	BaseUrl string
+}

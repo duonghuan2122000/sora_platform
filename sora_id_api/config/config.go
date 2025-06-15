@@ -7,6 +7,7 @@ import (
 )
 
 type Config struct {
+	BaseUrl               string   `mapstructure:"BASE_URL"`
 	HostName              string   `mapstructure:"HOST_NAME"`
 	AppPort               string   `mapstructure:"APP_PORT"`
 	TrustProxies          []string `mapstructure:"TRUST_PROXIES"`

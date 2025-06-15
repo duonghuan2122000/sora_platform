@@ -8,6 +8,10 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+type GetUserAvatarObjectIdDto struct {
+	AvatarS3ObjectId string
+}
+
 type UserRepository interface {
 	// Hàm lấy thông tin user bằng id
 	GetById(id string) (*User, error)
@@ -23,6 +27,12 @@ type UserRepository interface {
 
 	// Hàm kiểm tra mật khẩu có hợp lệ
 	VerifyPassword(password string, passwordHashed string) bool
+
+	// Hàm cập nhật avatar
+	Update(id string, user User) (*User, error)
+
+	// Hàm lấy thông tin avatar
+	GetAvatarObjectId(id string) (*string, error)
 }
 
 type userRepo struct {
@@ -54,7 +64,7 @@ func (repo *userRepo) GetById(id string) (*User, error) {
 // Hàm lấy thông tin user bằng username
 func (repo *userRepo) GetByUsername(username string) (*User, error) {
 	var user User
-	if err := database.MysqlConnect.Where("username = ?", username).First(&user).Error; err != nil {
+	if err := database.MysqlConnect.Where("Username = ?", username).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
@@ -74,4 +84,22 @@ func (repo *userRepo) Create(user User) (*User, error) {
 // Hàm kiểm tra mật khẩu có hợp lệ
 func (repo *userRepo) VerifyPassword(password string, passwordHashed string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(passwordHashed), []byte(password)) == nil
+}
+
+// Hàm cập nhật avatar
+func (repo *userRepo) Update(id string, user User) (*User, error) {
+	user.UpdatedDate = time.Now().UTC()
+	if err := database.MysqlConnect.Model(&User{}).Where("Id = ?", id).Updates(user).Error; err != nil {
+		return nil, err
+	}
+	return repo.GetById(id)
+}
+
+// Hàm lấy thông tin avatar
+func (repo *userRepo) GetAvatarObjectId(id string) (*string, error) {
+	var results GetUserAvatarObjectIdDto
+	if err := database.MysqlConnect.Model(&User{}).Select("AvatarS3ObjectId").Where("id = ?", id).First(&results).Error; err != nil {
+		return nil, err
+	}
+	return &results.AvatarS3ObjectId, nil
 }

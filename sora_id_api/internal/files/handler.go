@@ -10,10 +10,10 @@ import (
 	"github.com/google/uuid"
 )
 
-var fileSvc FileService
+var FileSvc FileService
 
 func InitHandler() {
-	fileSvc = NewFileService()
+	FileSvc = NewFileService()
 }
 
 func UploadFile(c *gin.Context) {
@@ -34,9 +34,8 @@ func UploadFile(c *gin.Context) {
 		base.ToErrorResponse(c, "400", "Tham số không hợp lệ")
 		return
 	}
-	fmt.Println(formFile.Header.Get("Content-Type"))
 	objectId := uuid.New().String()
-	uploaded, _ := fileSvc.UploadFile(fileData, "sora-platform", objectId, &FileExtraData{
+	uploaded, _ := FileSvc.UploadFile(fileData, "sora-platform", objectId, &FileExtraData{
 		ContentType:     formFile.Header.Get("Content-Type"),
 		OrginalFileName: &formFile.Filename,
 	})
@@ -47,7 +46,7 @@ func StreamFile(c *gin.Context) {
 	bucketName := c.Query("bucketName")
 	objectId := c.Query("objectId")
 
-	fileInfo, err := fileSvc.StreamFile(bucketName, objectId)
+	fileInfo, err := FileSvc.StreamFile(bucketName, objectId)
 	if err != nil {
 		base.ToErrorResponse(c, "400", "Tham số không hợp lệ")
 		return
