@@ -12,6 +12,7 @@
     "@popperjs/core": "^2.11.8",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.3",
+    "axios": "^1.10.0",
     "bootstrap": "^5.3.6",
     "solid-js": "^1.9.5",
     "yup": "^1.6.1",

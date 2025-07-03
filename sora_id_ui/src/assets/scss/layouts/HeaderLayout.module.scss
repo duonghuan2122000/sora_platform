@@ -1,0 +1,16 @@
+@use "@/assets/scss/_variables.scss" as *;
+
+.header {
+  height: $SoraHeaderHeight;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  justify-content: space-between;
+
+  .avatar {
+    color: #000;
+  }
+}

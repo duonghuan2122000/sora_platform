@@ -87,7 +87,7 @@ Mã lỗi:
 
 - 501: Không hỗ trợ
 */
-func GetSession(c *gin.Context) {
+func Login(c *gin.Context) {
 	var payload GetUserSessionReqDto
 
 	// Gắn JSON body vào struct
@@ -96,7 +96,7 @@ func GetSession(c *gin.Context) {
 		return
 	}
 
-	result, err := UserSvc.GetSession(payload)
+	result, err := UserSvc.Login(payload)
 	if err != nil {
 		var logicErr *sora_errors.LogicError
 		if errors.As(err, &logicErr) {

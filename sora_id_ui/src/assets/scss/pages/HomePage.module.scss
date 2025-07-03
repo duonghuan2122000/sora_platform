@@ -1,0 +1,22 @@
+.home {
+  padding: 16px;
+
+  .appItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+
+    .appIcon {
+      height: 100px;
+      width: 100px;
+      border: 1px solid #ccc;
+    }
+
+    .appTitle {
+      margin-top: 8px;
+    }
+  }
+}

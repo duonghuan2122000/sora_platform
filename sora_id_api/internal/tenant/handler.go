@@ -57,3 +57,13 @@ func Create(c *gin.Context) {
 	}
 	base.ToSuccessResponse(c, tenantDto)
 }
+
+/*
+Hàm xử lý chọn tenant muốn làm việc
+*/
+func SelectTenantToWork(c *gin.Context) {
+	tenantId := c.Query("tenantId")
+
+	c.SetCookie(base.TenantIdCookieName, tenantId, 86400, "/", "", false, true)
+	base.ToSuccessResponse(c, true)
+}

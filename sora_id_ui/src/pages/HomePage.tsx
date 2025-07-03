@@ -1,8 +1,13 @@
+import { RouterConst } from "@/routers/RouterConst";
+import { useNavigate } from "@solidjs/router";
+import { onMount } from "solid-js";
+
 export default function HomePage() {
-  return (
-    <div>
-      Home
-      <button class="btn btn-primary">Demo</button>
-    </div>
-  );
+  const navigate = useNavigate();
+
+  onMount(() => {
+    navigate(RouterConst.SelectTenant);
+  });
+
+  return <></>;
 }

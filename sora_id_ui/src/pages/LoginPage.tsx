@@ -1,6 +1,10 @@
 import SoraInput from "@/components/inputs/SoraInput";
 import SoraButton from "@/components/buttons/SoraButton";
 import { useLoginValidation } from "@/validations/login.validation";
+import userAPI from "@/apis/user/UserAPI";
+import { useNavigate } from "@solidjs/router";
+import commonFn from "@/commons/commonFunction";
+import { RouterConst } from "@/routers/RouterConst";
 
 /**
  * Màn hình đăng nhập
@@ -9,13 +13,29 @@ const LoginPage = () => {
   const { loginData, setLoginData, errorMessage, validate } =
     useLoginValidation();
 
+  const navigate = useNavigate();
+
+  const [_, setUser] = commonFn.createPersistentStore("user", {});
+
   /**
    * Sự kiện submit form
    * @param e Submit event - Sự kiện khi submit form
    */
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
-    await validate();
+    if (!(await validate())) {
+      return;
+    }
+    let loginDataDto = loginData();
+    let loginRes = await userAPI.login({
+      grantType: "password",
+      username: loginDataDto.email!,
+      password: loginDataDto.password!,
+    });
+    if (!loginRes.success) {
+    }
+    setUser({ ...loginRes.data?.user });
+    navigate(RouterConst.Home);
   };
 
   return (

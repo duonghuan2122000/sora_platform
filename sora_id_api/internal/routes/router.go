@@ -51,11 +51,12 @@ func InitRoutes(router *gin.Engine) {
 	routerV1.POST("/users/avatar/change", base.AuthMiddleware(), user.UpdateAvatar)
 	routerV1.POST("/users", user.Create)
 	routerV1.GET("/users/me/avatar", base.AuthMiddleware(), user.GetAvatar)
-	routerV1.POST("/session", user.GetSession)
+	routerV1.POST("/users/login", user.Login)
 
 	routerV1.POST("/files", files.UploadFile)
 	routerV1.GET("/files/stream", files.StreamFile)
 
 	routerV1.GET("/tenants/me", base.AuthMiddleware(), tenant.GetListByCurrentUser)
 	routerV1.POST("/tenants", base.AuthMiddleware(), tenant.Create)
+	routerV1.GET("/tenants/select", base.AuthMiddleware(), tenant.SelectTenantToWork)
 }

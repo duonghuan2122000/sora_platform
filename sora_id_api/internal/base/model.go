@@ -18,6 +18,8 @@ const (
 	AccessTokenCookieName = "x-sora-access-token"
 
 	CurrentUserVarKey = "Sora:CurrentUser"
+
+	TenantIdCookieName = "x-sora-tenant-id"
 )
 
 type UserDto struct {

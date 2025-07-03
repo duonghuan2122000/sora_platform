@@ -21,7 +21,7 @@ type UserService interface {
 	Create(createUserDto CreateUserDto) (*base.UserDto, error)
 
 	// Thực hiện lấy session hiện tại của người dùng
-	GetSession(payload GetUserSessionReqDto) (*GetUserSessionResDto, error)
+	Login(payload GetUserSessionReqDto) (*GetUserSessionResDto, error)
 
 	// Lấy thông tin user hiện tại
 	GetCurrentUser(userDto *base.UserDto) (*base.UserDto, error)
@@ -87,7 +87,7 @@ func (service *userService) Create(createUserDto CreateUserDto) (*base.UserDto, 
 }
 
 // Thực hiện lấy session hiện tại của người dùng
-func (service *userService) GetSession(payload GetUserSessionReqDto) (*GetUserSessionResDto, error) {
+func (service *userService) Login(payload GetUserSessionReqDto) (*GetUserSessionResDto, error) {
 	switch payload.GrantType {
 	case string(GrantTypePassword):
 		user, err := service.userRepo.GetByUsername(payload.Username)

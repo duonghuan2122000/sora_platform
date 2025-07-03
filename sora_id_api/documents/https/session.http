@@ -4,7 +4,7 @@
 
 ### Grant token (case thành công) - GrantType: password
 
-POST {{baseUrl}}/v1/session 
+POST {{baseUrl}}/v1/users/login 
 Content-Type: application/json
 
 {
